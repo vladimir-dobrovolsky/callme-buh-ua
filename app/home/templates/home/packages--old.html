@@ -1,0 +1,28 @@
+{% if home_packages %}
+<div class="uk-section" id="home-buy">
+    <div class="uk-container">
+        <h2 class="uk-h1 uk-text-uppercase">Пакети</h2>
+        <div class="uk-flex uk-flex-around uk-flex-wrap">
+            {% for i in home_packages %}
+            <div id="offer_{{ i.id }}" class="uk-inline uk-margin-small uk-margin-small-top  uk-box-shadow-hover-large" {% if i.active %} onclick="selectOffer('{{ i.id }}')" {% endif %} uk-scrollspy="cls:uk-animation-scale-up">
+                <div class="uk-card uk-box-shadow-large {% if i.active %}uk-card-primary{% else %}uk-card-default uk-disabled{% endif %} uk-padding-small" style="min-width: 210px;">
+                    <div class="uk-h2 uk-text-uppercase uk-text-center uk-margin-remove-vertical">
+                        ПАКЕТ<br>
+                        «{{ i }}»
+                    </div>
+                    <div class="uk-text-center uk-h4" style="white-space: pre-wrap;line-height: 1.1;">{{i.description}}</div>
+                    <div class="uk-text-center uk-h2 uk-margin-remove-vertical" style="font-size: 3rem;">
+                        {{ i.price }} ₴
+                    </div>
+                </div>
+                {% if not i.active %}
+                <div class="uk-position-center">
+                    <span uk-icon="icon: lock; ratio: 5;" style="opacity: .95; color: var(--primary);"></span>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}

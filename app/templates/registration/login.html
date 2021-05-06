@@ -1,0 +1,67 @@
+{% extends '_base.html' %}
+
+{% block page_title %}Вхід для користувачів | Callme БухгалтеріяUA{% endblock %}
+
+{% block meta %}
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+<meta property="og:title" content="Вхід для користувачів" />
+<meta property="og:site_name" content="Callme БухгалтеріяUA" />
+<link rel="canonical" href="https://{{ current_site.domain }}/accounts/login/" />
+{% endblock %}
+
+{% block content %}
+<section class="uk-section">
+    <div class="uk-container">
+        <h1 class="uk-h3 uk-text-center">Вхід для зареєстрованих користувачів</h1>
+        <div class="uk-flex uk-flex-middle uk-flex-column">
+
+            <div class="uk-width-large">
+                {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                <div class="uk-text-danger">
+                    <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form method="post" class="uk-form-stacked">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="uk-form-controls">
+                            {{ field }}
+                        </div>
+                        {% for error in field.errors %}
+                        <div class="uk-text-danger">
+                            <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <div class="uk-text-center">
+                        <button class="uk-button uk-border-pill uk-button-primary" type="submit">Увійти</button>
+                    </div>
+                </form>
+            </div>
+            <div class="uk-text-center uk-margin uk-width-large uk-flex uk-flex-around">
+                <div><a href="{% url 'home' %}#home-reg" class="uk-button-text uk-link-reset">Зареєструватись</a></div>
+                <div><a href="{% url 'password_reset' %}" class="uk-button-text uk-link-reset">Відновити пароль</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% load static %}
+{% block extra_js %}
+<script src="{% static '/js/imask.js' %}"></script>
+{% verbatim %}
+<script>
+    var element = document.getElementById('id_username');
+    var maskOptions = {
+        mask: '+{38}(000)000-00-00'
+    };
+    var mask = IMask(element, maskOptions);
+</script>
+{% endverbatim %}
+{% endblock %}

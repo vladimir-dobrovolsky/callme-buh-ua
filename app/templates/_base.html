@@ -1,0 +1,262 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="uk-UA">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block title %}
+        {{ self.title }}
+        {% endblock %}
+        {% block title_suffix %}
+        {% with site_title as site_name %}
+        {% if site_name %}| {{ site_name }}{% endif %}
+        {% endwith %}
+        {% endblock %}
+    </title>
+    <meta content="https://callme.buh-ua.com.ua" property="og:url">
+    <meta content="website" property="og:type">
+    <meta content="Callme БухгалтеріяUA" property="og:title">
+    <meta content="" property="og:description">
+    <meta content="{% get_media_prefix %}homepage/Callme_FB.png" property="og:image">
+    <meta content="image/png" property="og:image:type">
+    <meta content="1200" property="og:image:width">
+    <meta content="628" property="og:image:height">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static '/favicons/apple-touch-icon-57x57.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static '/favicons/apple-touch-icon-114x114.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static '/favicons/apple-touch-icon-72x72.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static '/favicons/apple-touch-icon-144x144.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static '/favicons/apple-touch-icon-60x60.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static '/favicons/apple-touch-icon-120x120.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static '/favicons/apple-touch-icon-76x76.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static '/favicons/apple-touch-icon-152x152.png' %}" />
+    <link rel="icon" type="image/png" href="{% static '/favicons/favicon-196x196.png' %}" sizes="196x196" />
+    <link rel="icon" type="image/png" href="{% static '/favicons/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/png" href="{% static '/favicons/favicon-32x32.png' %}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{% static '/favicons/favicon-16x16.png' %}" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{% static '/favicons/favicon-128.png' %}" sizes="128x128" />
+
+
+    <!-- Google Tag Manager -->
+    {% if not request.user.is_staff %}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TJ8B4WX');</script>
+    {% endif %}
+    <!-- End Google Tag Manager -->
+
+    {# Global stylesheets #}
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.2.2/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    {# TODO: remove this when uikit bug is fixed #}
+    <script>
+        function load_js() {
+            var head = document.getElementsByTagName('head')[0];
+            var script1 = document.createElement('script');
+            script1.src = 'https://cdn.jsdelivr.net/npm/uikit@3.2.2/dist/js/uikit.min.js';
+            var script2 = document.createElement('script');
+            script2.src = 'https://cdn.jsdelivr.net/npm/uikit@3.2.2/dist/js/uikit-icons.min.js';
+            head.appendChild(script1);
+            head.appendChild(script2);
+        }
+
+        window.onerror = function (msg) {
+            t = Object.prototype;
+            console.log(msg);
+            load_js();
+        }
+    </script>
+
+    <script type="text/javascript">t = Object.prototype</script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.2/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.2/dist/js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/core.css' %}">
+
+    {% block extra_css %}
+    {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+</head>
+
+<body id="body" class="{% block body_class %}{% endblock %}">
+
+<!-- Google Tag Manager (noscript) -->
+{% if not request.user.is_staff %}
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TJ8B4WX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+{% endif %}
+<!-- End Google Tag Manager (noscript) -->
+
+<style>
+.uk-navbar-nav > li > a {
+    text-transform: unset;
+    font-weight: lighter;
+}
+</style>
+
+    <header>
+        <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+        <nav class="uk-navbar-container uk-navbar-transparent uk-margin" style="background: #fff;" uk-navbar>
+            <div class="uk-navbar-left">
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a href="/" class="uk-logo">
+                            <img src="{% static 'logo.png' %}" style="max-width: 65px;height: auto;max-height: 65px;" uk-img alt="">
+                        </a>
+                    </li>
+                    <li class="uk-visible@m"><a href="{{ contacts.hotline.url }}" style="color: var(--primary);font-size: 2rem;font-weight: 100;">{{ contacts.hotline.number }}</a></li>
+                </ul>
+
+            </div>
+
+            <div class="uk-navbar-right">
+
+                <ul class="uk-navbar-nav uk-visible@m" {% if request.get_full_path == '/' %} uk-scrollspy-nav="closest: li; scroll: true; offset:79;" {% endif %}>
+                    {% if request.user.is_staff %}
+                        <li>
+                            <a class="" href="/admin/">Адміністрування</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="/admin/users/customuser/?is_staff__exact=0">Користувачі</a></li>
+                                    <li><a href="/admin/orders/usercall/">Дзвінки</a></li>
+                                    <li><a href="/admin/orders/packageorder/">Замовлення</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if request.get_full_path == '/' %}
+                    <li><a class="" href="#home-main">Головна</a></li>
+                    <!-- <li><a class="" href="#home-team">Про нас</a></li> -->
+                    <li><a class="" href="#home-team">Фахівці</a></li>
+                    <li><a class="" href="#home-rules">Правила</a></li>
+                    <li><a class="" href="#home-buy">Придбати</a></li>
+                    {% else %}
+                    <li><a class="" href="/">Головна</a></li>
+                    <li><a class="" href="/#home-team">Фахівці</a></li>
+                    <li><a class="" href="/#home-rules">Правила</a></li>
+                    <li><a class="" href="/#home-buy">Придбати</a></li>
+                    {% endif %}
+                    {% if not request.user.is_authenticated %}
+                    <li><a class="" href="{% url 'login' %}">Вхід</a></li>
+                    {% else %}
+                    <li><a class="" href="{% url 'logout' %}">Вихід</a></li>
+                    {% endif %}
+                </ul>
+                {% if not request.user.is_authenticated %}
+                <div class="uk-navbar-item">
+                    <div class="uk-panel">
+                        <a href="/#home-reg"
+                            class="uk-button uk-border-pill uk-button-primary uk-button-large uk-box-shadow-small uk-box-shadow-hover-large" uk-scroll="offset:100;">
+                            Реєстрація
+                        </a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="uk-navbar-item">
+                    <div class="uk-panel">
+                        <a href="{% url 'profile' %}"
+                            class="uk-button uk-border-pill uk-button-primary uk-button-large uk-box-shadow-small uk-box-shadow-hover-large">
+                            Кабінет
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+        </nav>
+        </div>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {# Global javascript #}
+    {# <script type="text/javascript" src="{% static 'js/core.js' %}"></script> #}
+
+    {% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+    {% endblock %}
+    <footer>
+        <div class="uk-section-default uk-section uk-section-xsmall"
+        uk-scrollspy="target: [uk-scrollspy-class]; cls: ; delay: false;">
+        <div class="uk-container uk-container-expand">
+            <hr>
+                <div class="" uk-grid="">
+                    <div class="uk-flex-auto uk-width-1-4@m uk-width-1-2@s uk-first-column">
+                        <div class="uk-margin " uk-scrollspy-class="uk-animation-fade" style="">
+                            <a class="el-link" href="https://buh-ua.com.ua/uk/"><img class="buh-ua-logo-color" alt=""
+                                    data-src="{% static 'buh-ua-logo-uk-pink.svg' %}" uk-img=""
+                                    src="{% static 'buh-ua-logo-uk-pink.svg' %}"></a>
+                        </div>
+                        <div class="uk-margin uk-width-xlarge uk-text-meta"
+                            uk-scrollspy-class="uk-animation-fade" style="">(c) 2020, ТОВ «Інфоліга».<br>Усі права захищено.</div>
+                    </div>
+                    <div class="uk-flex-auto uk-width-1-6@m uk-width-1-2@s">
+                        <ul class="uk-list " uk-scrollspy-class="uk-animation-fade" style="">
+                            <li class="el-item">
+                                <div class="el-content uk-panel"><a
+                                        href="https://buh-ua.com.ua/uk/archive/"
+                                        class="el-link uk-link-muted">Видання</a></div>
+                            </li>
+                            <li class="el-item">
+                                <div class="el-content uk-panel"><a
+                                        href="http://buh-ua.com.ua/uk/events/"
+                                        class="el-link uk-link-muted">Семінари та вебінари</a></div>
+                            </li>
+                            <li class="el-item">
+                                <div class="el-content uk-panel"><a
+                                        href="https://buh-ua.com.ua/uk/search/answers/"
+                                        class="el-link uk-link-muted">Письмові консультації</a></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="uk-flex-auto uk-width-1-4@m uk-width-1-2@s">
+                        <style>
+                            .uk-button-text::before {border-color: var(--primary) !important}
+                        </style>
+                        <a href="{{ contacts.hotline.url }}" uk-scrollspy-class="uk-animation-fade" class="uk-link-reset uk-button-text" style="color: var(--primary) !important; border-color: var(--primary) !important; font-size: 2rem;font-weight: 100;">{{ contacts.hotline.number }}</a>
+                    </div>
+                    <div class="uk-flex-auto uk-width-1-6@m uk-width-1-2@s">
+                        <h3 class="uk-h5 " uk-scrollspy-class="uk-animation-fade" style=""> Контакти </h3>
+                        <div class="uk-margin " uk-scrollspy-class="uk-animation-fade" style="">
+                            support@buh-ua.com.ua</div>
+                        <div class="uk-margin " uk-scrollspy-class="uk-animation-fade" style="">
+                            <div class="uk-child-width-auto uk-grid-medium uk-grid" uk-grid="">
+
+                                <div>
+                                    <a class="el-link uk-link-muted uk-icon" href="https://www.facebook.com/groups/1847090192004592/about/"
+                                       uk-icon="icon: facebook; ratio: 0.8;"></a></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% if messages %}
+
+    {# space in status tag because of uikit appending it to 'uk-notification-message-' #}
+    {% for message in messages %}
+    {% include "notification.html" with message=message %}
+    {% endfor %}
+    {% endif %}
+
+    {% if request.get_full_path == '/' %}
+    <!-- Сбрасываем положение страницы -->
+    <script>
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        document.body.scrollTop = 0; // For Safari
+    </script>
+    {% endif %}
+
+</body>
+
+</html>

@@ -1,0 +1,687 @@
+{% extends "_base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+<style>
+
+    .uk-section-primary, .uk-card-primary {
+        background: #f95860;
+        background-image: linear-gradient(135deg, #fe8155 0, #fa5565 30%, #f07297 70%, #febdd5 100%);
+    }
+
+    .uk-checkbox:checked, .uk-checkbox:indeterminate, .uk-radio:checked {
+        background: #f95860;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23fff%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A"), linear-gradient(135deg, #fe8155 0, #fa5565 30%, #f07297 70%, #febdd5 100%);
+        background-position: 50%;
+        background-repeat: no-repeat;
+    }
+
+    .consultant-name {
+        font-size: 2.3rem;
+        font-weight: 100;
+        line-height: 1.1;
+        color: var(--primary-light);
+    }
+
+    .consultant-description {
+        white-space: pre-wrap;
+        font-weight: lighter;
+        text-transform: uppercase;
+    }
+
+    .uk-h1 {
+        color: var(--primary-light);
+        font-size: 5rem;
+        line-height: 1;
+    }
+
+    .home-themes {
+        text-align: justify;
+    }
+
+    .home-themes > div {
+        font-weight: 100;
+        text-transform: uppercase;
+        font-size: 23px;
+        display: block;
+        margin: auto 4px;
+    }
+
+    .home-themes > .thick {
+        font-weight: 500;
+        color: #fff;
+    }
+
+    .home-themes > .noshow {
+        display: none;
+    }
+
+    #home-buy .uk-card.uk-card-default.uk-disabled > * {
+        filter: brightness(200%) opacity(0.5);
+    }
+
+    #home-buy .active:after {
+        content: 'Обраний пакет';
+        display: flex;
+        margin: 0.7rem auto;
+        width: 100%;
+        justify-content: center;
+    {% if request.user_agent.is_pc %}
+        position: absolute;
+    {% endif %}
+        font-weight: 600;
+        color: var(--primary-light);
+        text-transform: uppercase;
+        transition: all .4s;
+        font-size: 1.5em;
+    }
+
+    #home-buy .active .uk-card.uk-box-shadow-large {
+        box-shadow: 0 6px 35px var(--primary);
+        transform: scale(1.05);
+    }
+
+    .liqpay-btn {
+        display: none;
+    }
+
+    .liqpay-btn.active {
+        display: block;
+    }
+
+    .uk-input {
+        height: 36px;
+    }
+
+    .uk-overlay-default {
+        background: rgba(255, 255, 255, 0.65);
+    }
+
+</style>
+{% endblock %}
+
+{% block title %}
+{% with site_title as site_name %}
+{{ site_name }}
+{% endwith %}
+{% endblock %}
+
+{% block title_suffix %}
+{% endblock %}
+
+{% block content %}
+<div class="uk-section uk-section-xsmall uk-margin-remove-top uk-padding-remove-top" id="home-main">
+    <input type="text" autofocus="autofocus" style="visibility: hidden;height: 0;line-height: 0;padding: 0;margin: 0;display: inline-block; border: none;" />
+    <div class="uk-container" style="min-height: 85vh; display: flex; justify-content: center;">
+        <div class="uk-height-1-1" style="display: flex;">
+{% comment %}            <div class="uk-height-1-1" style="flex: 1 1 auto;">
+                <div style="margin-top: 77px; width: 115px;">
+                    <img src="{% get_media_prefix %}/homepage/circle1.png" uk-parallax="y: -200; easing: -0.5" alt="" uk-img>
+                </div>
+            </div>{% endcomment %}
+            {% if request.user_agent.is_pc %}
+            <div class="uk-height-1-1" style="flex: 1 1 auto;">
+                <div style="margin-top: 358px; width: 148px;">
+                    <a class="" href="#home-buy" uk-scroll="offset:79;" onclick="selectOffer('5')">
+                        <img src="{% get_media_prefix %}/homepage/circle2.png" uk-parallax="y: -200; easing: -1" alt="" uk-img>
+                    </a>
+                </div>
+            </div>
+            <div class="uk-height-1-1" style="flex: 1 1 auto;" onclick="selectOffer('6')">
+                <div style="margin-top: 159px; width: 171px;">
+                    <a class="" href="#home-buy" uk-scroll="offset:79;">
+                    <img src="{% get_media_prefix %}/homepage/circle3.png" uk-parallax="y: -200; easing: -1" alt="" uk-img>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            <div class="uk-height-1-1" style="flex: 0 1 auto;display: flex;flex-direction: column;">
+                <div>
+                    <img src="{% get_media_prefix %}/homepage/1-center-crop.png" style="max-height: 476px; margin-left: 40px;" alt="" uk-img="">
+                </div>
+                <div class="uk-text-center">
+
+                    <style>
+                        #e30_6 {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                        }
+
+                        #e30_1 {
+                            margin-top: 19px;
+                            font-weight: 200;
+                            font-size: 38px;
+                            line-height: 42px;
+                            /* identical to box height, or 109% */
+
+                            text-transform: uppercase;
+                            color: #333333;
+
+                        }
+
+                        #e30_2 {
+                            margin-top: 9px;
+                            font-weight: 200;
+                            font-size: 82px;
+                            line-height: 80px;
+                            /* identical to box height, or 98% */
+
+                            text-transform: uppercase;
+                            color: #F95860;
+                        }
+
+                        #e30_3 {
+                            margin-top: 9px;
+                            font-weight: 200;
+                            font-size: 38px;
+                            line-height: 48px;
+                            /* identical to box height, or 126% */
+
+                            text-transform: uppercase;
+
+                            color: #333333;
+                        }
+
+                        #e30_4 {
+                            margin-top: 48px;
+                            font-weight: 200;
+                            font-size: 53px;
+                            line-height: 42px;
+                            /* identical to box height, or 78% */
+
+                            color: #F95860;
+                        }
+
+                        #e30_5 {
+                            margin-top: 17px;
+                            font-weight: 200;
+                            font-size: 30px;
+                            line-height: 24px;
+                            /* identical to box height, or 80% */
+
+                            color: #666666;
+
+                        }
+                        #e30_7 {
+                            margin-top: 51px;
+                            display: flex;
+                            width: inherit;
+                            justify-content: space-evenly;
+                        }
+
+                        .uk-button-large {
+                            padding: 0 25px;
+                            line-height: 53px;
+                            font-size: 18px;
+                            font-weight: 200;
+                        }
+                    </style>
+
+                    <div id="e30_6">
+                        <div id="e30_1">Всеукраїнська</div><div id="e30_2">ПІДТРИМКА</div><div id="e30_3">бухгалтера</div><div id="e30_4">0-800-50-29-60</div><div id="e30_5">Вт, Ср, Чт 11:00 - 13:00</div>
+                    </div>
+                    <div id="e30_7">
+                        <div><a class="uk-button uk-button-primary uk-button-large uk-border-pill" href="#home-buy" uk-scroll="offset:79;">Придбати</a></div>
+                        <div><a class="uk-button uk-button-default uk-button-large uk-border-pill" href="#home-details" uk-scroll="offset:79;">Детальніше</a></div>
+                    </div>
+                </div>
+            </div>
+            {% if request.user_agent.is_pc %}
+            <div class="uk-height-1-1" style="flex: 1 1 auto;">
+                <div style="margin-top: 76px; width: 193px;">
+                    <a class="" href="#home-buy" uk-scroll="offset:79;" onclick="selectOffer('7')">
+                    <img src="{% get_media_prefix %}/homepage/circle4.png" uk-parallax="y: -200; easing: -0.5" alt="" uk-img>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+{% comment %}            <div class="uk-height-1-1" style="flex: 1 1 auto;">
+                <div style="margin-top: 557px; width: 227px">
+                    <img src="{% get_media_prefix %}/homepage/circle5.png" uk-parallax="y: -200; easing: -0.5" alt="" uk-img>
+                </div>
+            </div>{% endcomment %}
+        </div>
+    </div>
+</div>
+<div class="uk-section uk-section-primary" id="home-details">
+    <div class="uk-container">
+        <div class="uk-grid-small" uk-grid="">
+            <div class="uk-width-1-4@m">
+                <div class="home-themes">
+                    {% with thick='thick' noshow='noshow' %}
+                        {% for i in home_themes %}
+                            <div class="{% cycle thick noshow normal noshow %}" style="text-align: right;">{{ i.name }}</div>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="uk-width-1-2@m">
+                <div class="uk-text-center">
+                    <h2 class="uk-text-uppercase" style="margin: 0 auto; font-size: 44px; line-height: 1;">Телефонуйте</h2>
+                    <h2 class="uk-text-uppercase" style="margin: 21px auto 0; line-height: 1; font-size: 37px; font-weight: 100;">{{ contacts.hotline.number }}</h2>
+                    <h3 class="uk-text-uppercase" style="font-weight: 100; margin: 50px auto 0; font-size: 27px; line-height: 1;">З <strong>вівторка</strong> по <strong>четвер</strong></h3>
+                    <h3 class="uk-text-uppercase" style="font-weight: 100; margin: 13px auto 0; font-size: 27px; line-height: 1;">з <strong>11:00</strong> по <strong>13:00</strong></h3>
+                    <h3 class="uk-text-uppercase" style="line-height: 1.1; font-size: 44px; margin-top: 54px;">наші<br>фахівці<br>дадуть відповіді<br>на ваші<br>запитання</h3>
+                </div>
+            </div>
+            <div class="uk-width-1-4@m">
+                <div class="home-themes">
+                    {% with thick='thick' noshow='noshow' %}
+                        {% for i in home_themes %}
+                            <div class="{% cycle noshow normal noshow thick %}">{{ i.name }}</div>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="uk-section" id="home-team">
+    <div class="uk-container uk-margin">
+        <h2 class="uk-h1 uk-text-uppercase">Фахівці</h2>
+        <div uk-grid>
+            <div class="uk-width-3-4@m uk-margin-large">
+                <p class="uk-h3">Наші фахівці – це діючи редактори журналів <a href="https://buh-ua.com.ua/uk/journal/" class="uk-text-bold" style="color: var(--primary);" target="_blank">БУХГАЛТЕРІЯUA</a> та
+                    <a href="https://buh-ua.com.ua/uk/agro/" class="uk-text-bold" style="color: var(--primary);" target="_blank">AGROUA</a> з більш ніж 20-річним досвідом. З-поміж них: бухгалтери-практики, кандидати економічних і юридичних наук, ключові лектори бухгалтерських семінарів, незалежні консультанти. Зважаючи на те, що журнали БУХГАЛТЕРІЯUA та AGROUA відомі найбільш потужними аналітичними матеріалами, наші фахівці відповідально проконсультують з бухгалтерських або юридичних питань.</p>
+            </div>
+        </div>
+    </div>
+    <div class="uk-container">
+        {% for i in home_consultants %}
+            {% if not forloop.counter|divisibleby:2 %}
+            <div class="uk-grid-margin" uk-grid="">
+                <div class="uk-flex-auto uk-width-4-5@m">
+                    <div class="uk-card uk-card-default uk-card-large uk-margin uk-box-shadow-large"
+                        id="" uk-scrollspy="cls:uk-animation-slide-left">
+                        <div class="uk-child-width-expand uk-grid-collapse uk-grid-match" uk-grid="">
+                            <div class="uk-width-2-5@s">
+                                <div class="uk-card-media-left uk-cover-container">
+                                    <img class="uk-contain" src="{{ i.lector_photo.url }}" alt="" uk-img>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-padding uk-margin-remove-first-child">
+                                    <h3 class="uk-h3 uk-margin-top uk-margin-remove-bottom consultant-name">{{ i.first_name }} {{ i.second_name }}</h3>
+                                    <div class="uk-margin-top consultant-description">{{ i.description }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-flex-auto uk-width-1-5@m"> </div>
+            </div>
+            {% else %}
+            <div class="uk-grid-margin" uk-grid="">
+                <div class="uk-flex-auto uk-width-1-5@m"> </div>
+                <div class="uk-flex-auto uk-width-4-5@m">
+                    <div class="uk-card uk-card-default uk-card-large uk-margin uk-box-shadow-large"
+                        id="" uk-scrollspy="cls:uk-animation-slide-right">
+                        <div class="uk-child-width-expand uk-grid-collapse uk-grid-match" uk-grid="">
+                            <div class="uk-width-2-5@s">
+                                <div class="uk-card-media-left uk-cover-container">
+                                    <img class="uk-contain" src="{{ i.lector_photo.url }}" alt="" uk-img>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-padding uk-margin-remove-first-child">
+                                    <h3 class="uk-h3 uk-margin-top uk-margin-remove-bottom consultant-name">{{ i.first_name }} {{ i.second_name }}</h3>
+                                    <div class="uk-margin-top consultant-description">{{ i.description }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="uk-section uk-section-primary" id="home-rules">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-2-3@m">
+                <h2 class="uk-h1 uk-text-uppercase uk-margin-small-bottom">Правила роботи</h2>
+                <h3 class="uk-h2 uk-text-uppercase uk-margin-remove-vertical">Сервісу оперативного консультування</h3>
+                <p style="color: #fff; text-align:justify; font-size: 24px;">В рамках діючих пакетів фахівці відповідають на запитання, які не потребують залучення додаткових матеріалів або більш глибокого вивчення. Строк дії пакетів – 1 рік.</p>
+                <p style="color: #fff; text-align:justify; font-size: 24px;">Повний перелік правил та умов:</p>
+                <div class="uk-text-center">
+                    <a href="/toc/" target="_blank" class="uk-button uk-button-default uk-border-pill">Читати повністю</a>
+                </div>
+            </div>
+            <div class="uk-width-1-3@m">
+                <div class="uk-flex uk-flex-center">
+                    <img class="uk-padding-large" data-src="{% static 'logo_black.png' %}" alt="" uk-img>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "home/packages.html" %}
+
+<section class="uk-section uk-section-xsmall"  id="home-reg" {% if not form.errors %} uk-scrollspy="cls:uk-animation-fade" {% endif %}>
+    <div class="uk-container">
+        <div class="uk-child-width-1-3@m uk-grid-divider uk-margin-large-bottom" uk-grid-match uk-grid>
+            <div>
+                <div class="uk-text-center">
+                    <button class="uk-button-primary" disabled="" style=" color: #fff; font-size: 2rem; font-weight: 200; padding: 8px 21px; border-radius: 40px;">1</button>
+                </div>
+                <h2 class="uk-text-center uk-margin-top">Реєструйся</h2>
+                <div class="uk-flex uk-flex-middle uk-flex-center uk-flex-column">
+                    {% if not request.user.is_authenticated %}
+                        <style>
+                            .registration-form {
+                                display: flex;
+                                flex-direction: column;
+                            }
+                            .registration-form > div {
+                                order: 1;
+                            }
+                            .registration-form > div:nth-of-type(5) {
+                                display: flex;
+                                flex-direction: row-reverse;
+                                align-items: center;
+                                justify-content: space-between;
+                                order: 2;
+                            }
+                            .registration-form > div:nth-of-type(5) > label {
+                                flex: 0 1 90%;
+                            }
+                            #home-reg h2 {
+                                font-size: 2.5rem;
+                                line-height: .75;
+                            }
+                            #home-reg h2 small {
+                                font-size: .6em;
+                            }
+
+                        </style>
+                        {% if form.errors %}
+                        {% for error in form.non_field_errors %}
+                        <div class="uk-text-danger">
+                            <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <form method="post" class="uk-form-stacked registration-form">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="uk-margin-bottom">
+                                <label class="uk-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                <div class="uk-form-controls">
+                                    {{ field }}
+                                </div>
+                                {% for error in field.errors %}
+                                <div class="uk-text-danger">
+                                    <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <div class="uk-text-center" style="order: 3;">
+                                <button id="submitButton" class="uk-button uk-button-primary uk-border-pill" type="submit">Зареєструватись</button>
+                            </div>
+                            <div style="order: 3;">
+                                <p class="uk-text-meta uk-margin-small-top">Зверніть увагу на правильність введених даних, за ними проходить ідентифікація клієнта при замовленні послуги.</p>
+                            </div>
+                            <script type="text/javascript">
+                                document.getElementById('submitButton').addEventListener('click', function() {
+                                    fbq('track', 'CompleteRegistration', {
+                                        value: 0,
+                                        currency: 'UAH',
+                                    });
+                                }, false);
+                            </script>
+                        </form>
+                    {% else %}
+                        <div class="uk-margin-large-top">
+                            <span uk-icon="icon: check; ratio: 10" style="color: var(--primary-light);"></span>
+                            <p class="uk-h3 uk-margin-remove-vertical uk-text-center">Реєстрація успішна</p>
+                        </div>
+                    {% endif %}
+                    </div>
+            </div>
+            <div>
+                <div class="uk-text-center">
+                    <button class="uk-button-primary" disabled="" style=" color: #fff; font-size: 2rem; font-weight: 200; padding: 8px 18px; border-radius: 40px;">2</button>
+                </div>
+                <h2 class="uk-text-center uk-margin-top">Сплачуй пакет<br><small>зручним способом</small></h2>
+                <div class="uk-flex uk-flex-column uk-flex-center">
+                    {% if request.user.is_authenticated %}
+                        <div class="uk-flex uk-flex-center uk-flex-middle uk-flex-column">
+                            <div>
+                                {% for i in home_packages %}
+                                    {% include "liqpay/btn.html" with i=i %}
+                                {% endfor %}
+                            </div>
+                            <div>
+                                <style>
+                                    .payment-systems {
+                                        display: flex;
+                                        flex-direction: row;
+                                        justify-content: space-evenly;
+                                        align-items: center;
+                                        margin: 16px auto;
+                                    }
+
+                                    .payment-systems > div {
+                                        flex: 1 0 33%;
+                                    }
+
+                                    .payment-systems img {
+                                        max-width: 100%;
+                                    }
+                                </style>
+                                <div class="payment-systems">
+                                    <div>
+                                        <img src="{% get_media_prefix %}homepage/icons8-visa.svg">
+                                    </div>
+                                    <div>
+                                        <img src="{% get_media_prefix %}homepage/icons8-mastercard-logo.svg">
+                                    </div>
+                                    <div>
+                                        <img src="{% get_media_prefix %}homepage/pb24.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %}{% for i in home_packages %}
+                            {% include "liqpay/btn.html" with i=i %}
+                        {% endfor %}{% endcomment %}
+
+                    <h3 class="uk-heading-line uk-text-center"><span>або</span></h3>
+                    <div class="uk-flex uk-flex-middle uk-flex-column">
+                        <h3 class="uk-text-center uk-h5 uk-margin-remove-vertical">Сформуй рахунок для компанії</h3>
+                        {% if form.errors %}
+                        {% for error in form.non_field_errors %}
+                        <div class="uk-text-danger">
+                            <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <form method="post" class="uk-form-stacked">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                <div class="uk-form-controls">
+                                    {{ field }}
+                                </div>
+                                {% for error in field.errors %}
+                                <div class="uk-text-danger">
+                                    <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <div class="uk-text-center">
+                                <button id="submitButton" class="uk-button uk-button-primary uk-border-pill" type="submit">Скачати</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% else %}
+                        <div>
+                            <div class="uk-inline uk-dark uk-width-1-1">
+                                <div class="uk-flex uk-flex-center">
+                                    <a href="#!" class="liqpay-btn active" style="display: block !important;" disabled="">
+                                        <button style="border: none !important; display:inline-block !important;text-align: center !important;padding: 7px 20px !important;
+                                                    color: #fff !important; font-size:16px !important; font-weight: 600 !important; font-family:OpenSans, sans-serif; cursor: pointer !important; border-radius: 2px !important;
+                                                    background: rgb(122,183,43) !important;">
+                                            <img src="https://static.liqpay.ua/buttons/logo-small.png" name="btn_text" style="margin-right: 7px !important; vertical-align: middle !important;">
+                                            <span style="vertical-align:middle; !important">Сплатити 210 UAH</span>
+                                        </button>
+                                    </a>
+                                </div>
+                                <div>
+                                    <style>
+                                        .payment-systems {
+                                            display: flex;
+                                            flex-direction: row;
+                                            justify-content: space-evenly;
+                                            align-items: center;
+                                            margin: 16px auto;
+                                        }
+
+                                        .payment-systems > div {
+                                            flex: 1 0 33%;
+                                        }
+                                        .payment-systems img {
+                                            max-width: 100%;
+                                        }
+                                    </style>
+                                    <div class="payment-systems">
+                                        <div>
+                                            <img src="{% get_media_prefix %}homepage/icons8-visa.svg">
+                                        </div>
+                                        <div>
+                                            <img src="{% get_media_prefix %}homepage/icons8-mastercard-logo.svg">
+                                        </div>
+                                        <div>
+                                            <img src="{% get_media_prefix %}homepage/pb24.svg">
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="uk-heading-line uk-text-center"><span>або</span></h3>
+                                <div class="uk-flex uk-flex-middle uk-flex-column">
+                                    <h3 class="uk-text-center uk-h5 uk-margin-remove-vertical">Сформуй рахунок для компанії</h3>
+
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="id_company_name">Компанія</label>
+                                        <div class="uk-form-controls">
+                                            <input type="text" name="company_name" value="" maxlength="50" required="" id="id_company_name" class="uk-input ">
+                                        </div>
+                                    </div>
+
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="id_company_edrpou">ЄДРПОУ</label>
+                                        <div class="uk-form-controls">
+                                            <input type="text" name="company_edrpou" value="" maxlength="10" required="" id="id_company_edrpou" class="uk-input ">
+                                        </div>
+                                    </div>
+
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="id_company_ipn">ІПН</label>
+                                        <div class="uk-form-controls">
+                                            <input type="text" name="company_ipn" maxlength="12" id="id_company_ipn" class="uk-input ">
+                                        </div>
+                                    </div>
+
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="id_target">Обраний пакет</label>
+                                        <div class="uk-form-controls">
+                                            <input type="hidden" name="target" value="1" id="id_target" class="uk-hidden">
+                                        </div>
+                                    </div>
+
+                                    <div class="uk-text-center">
+                                        <button class="uk-button uk-button-primary uk-border-pill" style="color: #fff;" disabled>Скачати</button>
+                                    </div>
+                                </div>
+                                <div class="uk-overlay uk-overlay-default uk-position-cover"></div>
+                                <div class="uk-overlay uk-position-center">
+                                    <svg fill="#ed7aa3" style="opacity: 0.7;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="250px" height="250px"><path d="M 25 3 C 18.363281 3 13 8.363281 13 15 L 13 20 L 9 20 C 7.355469 20 6 21.355469 6 23 L 6 47 C 6 48.644531 7.355469 50 9 50 L 41 50 C 42.644531 50 44 48.644531 44 47 L 44 23 C 44 21.355469 42.644531 20 41 20 L 37 20 L 37 15 C 37 8.363281 31.636719 3 25 3 Z M 25 5 C 30.566406 5 35 9.433594 35 15 L 35 20 L 15 20 L 15 15 C 15 9.433594 19.433594 5 25 5 Z M 9 22 L 41 22 C 41.554688 22 42 22.445313 42 23 L 42 47 C 42 47.554688 41.554688 48 41 48 L 9 48 C 8.445313 48 8 47.554688 8 47 L 8 23 C 8 22.445313 8.445313 22 9 22 Z M 25 30 C 23.300781 30 22 31.300781 22 33 C 22 33.898438 22.398438 34.6875 23 35.1875 L 23 38 C 23 39.101563 23.898438 40 25 40 C 26.101563 40 27 39.101563 27 38 L 27 35.1875 C 27.601563 34.6875 28 33.898438 28 33 C 28 31.300781 26.699219 30 25 30 Z"/></svg>
+                                </div>
+
+                            </div>
+                        </div>
+{#                    <div class="uk-text-center uk-margin-large-top">#}
+{#                        <span uk-icon="icon: lock; ratio: 10" style="color: var(--primary-light);"></span>#}
+{#                    </div>#}
+                    {% endif %}
+                </div>
+            </div>
+            <div>
+                <div class="uk-height-1-1 uk-flex uk-flex-column">
+                    <div class="uk-text-center">
+                        <button class="uk-button-primary" disabled="" style=" color: #fff; font-size: 2rem; font-weight: 200; padding: 8px 18px; border-radius: 40px;">3</button>
+                    </div>
+                    <div>
+                        <h2 class="uk-text-center" style="margin: 20px auto 70px;">Телефонуй<br><small>з 11:00 до
+                                13:00<br>вівторок, середа, четвер</small></h2>
+                    </div>
+                    <hr>
+                    <div class="uk-text-center">
+                        <button class="uk-button-primary" disabled="" style="margin-top: 70px; color: #fff; font-size: 2rem; font-weight: 200; padding: 8px 18px; border-radius: 40px;">4</button>
+                    </div>
+                    <div>
+                        <h2 class="uk-text-center" style="margin: 20px auto 40px;">Контролюй<br><small>в особистому
+                                кабінеті</small></h2>
+                        <div class="uk-text-center uk-margin-top">
+                            <a class="uk-button uk-button-primary uk-border-pill" href="{% url 'profile' %}">Увійти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-text-center">
+            <p class="uk-text-meta">Оплатою Абонемента Клієнт підтверджує ознайомлення з Правилами та погоджується з ними</p>
+            {% include "home/toc.html" %}
+        </div>
+    </div>
+</section>
+
+    <style>
+        .uk-form-label[for=id_target] {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static '/js/imask.js' %}"></script>
+{% verbatim %}
+    <script>
+        function selectOffer(selectedOffer) {
+            var elmnt = document.getElementById('id_target');
+            elmnt.value = selectedOffer;
+            var btns = document.querySelectorAll('#home-buy .active');
+            for (let i = 0; i < btns.length; i++) {
+              btns[i].classList.remove("active");
+            }
+            var btn = document.getElementById('offer_'+selectedOffer);
+            btn.classList.toggle("active");
+
+            var liqpaybtns = document.querySelectorAll('.liqpay-btn');
+            for (let i = 0; i < liqpaybtns.length; i++) {
+              liqpaybtns[i].classList.remove("active");
+            }
+            var liqpaybtn = document.getElementById('liqpay-btn-for-'+selectedOffer);
+            liqpaybtn.classList.toggle("active");
+        }
+
+        // Выбираем пакет c id=5 по умолчанию
+        selectOffer(5);
+    </script>
+    <script>
+        var element = document.getElementById('id_phone');
+        var maskOptions = {
+            mask: '+{38}(000)000-00-00'
+        };
+        var mask = IMask(element, maskOptions);
+    </script>
+{% endverbatim %}
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "_base.html" %}
+
+{% block title %}
+Профіль користувача
+{% endblock %}
+
+{% block content %}
+<div class="uk-section uk-section-xsmall">
+    <h1 class="uk-h1 uk-text-center">Особистий кабінет</h1>
+</div>
+<section class="uk-section">
+    <div class="uk-container">
+        <div class="uk-grid-divider" uk-grid>
+            <div class="uk-width-3-5@m">
+                <div class="uk-child-width-1-2@m uk-grid-divider" uk-grid>
+                    <div>
+                        <p class="uk-text-meta uk-text-center">Залишилось дзвінків</p>
+                        <h3 class="uk-h2 uk-margin-small-top uk-text-center">{{ available_calls }}</h3>
+                    </div>
+                    <div>
+                        <p class="uk-text-meta uk-text-center">Строк дії</p>
+                        <h3 class="uk-h2 uk-margin-small-top uk-text-center">{{ currently_active_end_date }}</h3>
+                    </div>
+                </div>
+                <div class="uk-divider"></div>
+                <h3>Історія дзвінків</h3>
+                <div>
+                    <table class="uk-table uk-table-divider">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Тема</th>
+                                <th>Консультант</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if calls %}
+                                {% for i in calls %}
+                                <tr>
+                                    <td>
+                                        {{ i.created|date:"d.m.Y" }}
+                                        <span class="">{{ i.created|date:"h:i" }}</span>
+                                    </td>
+                                    <td>{{ i.topic }}</td>
+                                    <td>
+                                        {{ i.answered_by }}
+                                    </td>
+                                </tr>    
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="uk-text-center">
+                                            Тут буде відображатись історія ваших дзвінків<br>
+                                            Зателефонуйте нам :)
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif%}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="uk-divider"></div>
+                <h3>Історія замовлень</h3>
+                <div>
+
+                    <table class="uk-table uk-table-divider">
+                        <thead>
+                            <th>Дата</th>
+                            <th>Замовлення</th>
+                            <th>Статус</th>
+                        </thead>
+                        <tbody>
+                            {% for i in orders %}
+                            <tr>
+                                <td>
+                                    {{ i.created|date:"d.m.Y" }}
+                                    <span class="">{{ i.created|date:"h:i" }}</span>
+                                </td>
+                                <td>{{ i.target }}<br>
+                                    <span class="uk-text-meta">
+                                        ({{i.date_start|date:"d.m.y"}} – {{i.date_end|date:"d.m.y"}})</td>
+                                    </span>
+                                <td>
+                                    {% if i.confirmed %}
+                                    <span uk-icon="icon: check; ratio: 2;"></span>
+                                    {% else %}
+                                    <span uk-icon="icon: minus; ratio: 2;"></span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="uk-width-2-5@m">
+                <div class="uk-flex uk-flex-middle uk-flex-column">
+                    <div class="uk-width-large">
+                        {% if form.errors %}
+                        {% for error in form.non_field_errors %}
+                        <div class="uk-text-danger">
+                            <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <form method="post" class="uk-form-stacked">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                <div class="uk-form-controls">
+                                    {{ field }}
+                                </div>
+                                {% for error in field.errors %}
+                                <div class="uk-text-danger">
+                                    <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <p class="uk-text-meta">Зверніть увагу на правильність введених даних, за ними проходить ідентифікація клієнта при замовленні послуги.</p>
+                            <div class="uk-text-center">
+                                <button class="uk-button uk-button-default uk-border-rounded" type="submit">Зберегти</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+{% comment %}            <div class="uk-text-center uk-margin uk-width-large uk-flex uk-flex-around">
+                <div><a href="{% url 'password_change' %}" class="uk-button-text">Змінити пароль</a></div>
+                <div><a href="{% url 'logout' %}" class="uk-button-text">Вийти</a></div>
+            </div>{% endcomment %}
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% load static %}
+{% block scripts %}
+<script src="{% static '/js/imask.js' %}"></script>
+{% verbatim %}
+<script>
+    var element = document.getElementById('id_phone');
+    var maskOptions = {
+        mask: '+{38}(000)000-00-00'
+    };
+    var mask = IMask(element, maskOptions);
+</script>
+{% endverbatim %}
+{% endblock %}

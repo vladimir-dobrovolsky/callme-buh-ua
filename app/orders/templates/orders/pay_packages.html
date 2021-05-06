@@ -1,0 +1,22 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #spinner { 	width: 400px; height: 400px;
+                 	position: absolute ;top: 50%; left: 50%;
+	                margin: -200px 0 0 -200px;
+        }
+        #form{display: none;}
+    </style>
+</head>
+<body>
+<div id="spinner"><img src="{% static "logo.png" %}" ></div>
+<form action="{{action}}" method="post" id="form">
+    <input type="text" name="data" value="{{data}}">
+    <input type="text" name="signature" value="{{signature}}">
+    <input type="submit" >
+</form>
+<script>setTimeout(function(){document.forms['form'].submit()}, 500);</script>
+</body>
+</html>

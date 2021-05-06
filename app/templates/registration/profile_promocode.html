@@ -1,0 +1,60 @@
+{% extends "_base.html" %}
+
+{% block page_title %}Активація промо-кода | {{ current_site.name }}{% endblock %}
+
+{% block content %}
+
+<section class="uk-section">
+    <div class="uk-container">
+        <h1 class="uk-h3 uk-text-center">Активація промо-кода</h1>
+        <div class="uk-flex uk-flex-middle uk-flex-column">
+            <div class="uk-card uk-card-default uk-card-body uk-border-rounded uk-width-large">
+                {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                <div class="uk-text-danger">
+                    <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form method="post" class="uk-form-stacked">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="uk-form-controls">
+                            {{ field }}
+                        </div>
+                        {% for error in field.errors %}
+                        <div class="uk-text-danger">
+                            <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <div class="uk-text-center">
+                        <button class="uk-button uk-button-default uk-border-rounded" type="submit">Активувати</button>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="uk-text-center uk-margin uk-width-large uk-flex uk-flex-around">
+                <div><a href="{% url 'password_change' %}" class="uk-button-text">Змінити пароль</a></div>
+            </div> -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% load static %}
+{% block scripts %}
+<script src="{% static '/js/imask.js' %}"></script>
+{% verbatim %}
+<script>
+    var element = document.getElementById('id_phone');
+    var maskOptions = {
+    mask: '+{38}(000)000-00-00'
+    };
+    var mask = IMask(element, maskOptions);
+</script>
+{% endverbatim %}
+{% endblock %}

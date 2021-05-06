@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  db:
+    build:  ./db
+    volumes:
+      # - postgres_data:/var/lib/postgresql/data/
+      - ./postgres_data:/var/lib/postgresql/data/
+  web:
+    build: ./django
+
+    command: >
+      sh -c "pip install -r requirements.txt
+            python manage.py wait_for_database
+            python manage.py migrate
+            python manage.py cleardb
+            python manage.py loaddata db.json
+            python manage.py runserver 0.0.0.0:8000"
+
+  #  command: >
+  #     sh -c "python manage.py wait_for_database
+  #           python manage.py cleardb
+  #           python manage.py loaddata ./www/media/db.json
+  #           python manage.py runserver 0.0.0.0:8000"
+
+    # command: >
+    #   sh -c "pip install -r requirements.txt
+    #         python manage.py wait_for_database
+    #         python manage.py runserver 0.0.0.0:8000"
+
+    # command: >
+    #   sh -c "python manage.py wait_for_database
+    #         python manage.py runserver 0.0.0.0:8000"
+
+    # command: >
+    #   sh -c "gunicorn -w 4 core.wsgi:application --bind 0.0.0.0:8000"
+
+    # command: bash -c "python manage.py migrate sites && python manage.py migrate && gunicorn core.wsgi:application --bind 0.0.0.0:8000"
+
+    volumes:
+      - ./django/app:/app/
+      - ./storage/static:/app/www/static/
+      - ./storage/media:/app/www/media/
+    expose:
+      - 8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./storage/static:/app/www/static/
+      - ./storage/media:/app/www/media/
+    ports:
+      - 80:80
+    depends_on:
+      - web
+
+# volumes:
+#   postgres_data:

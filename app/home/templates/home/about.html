@@ -1,0 +1,82 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="uk-section-default uk-background-cover">
+    <div class="uk-padding">
+        <!-- <h1 class="uk-animation-fade uk-text-center" style="color: var(--primary);">ПРО НАС</h1> -->
+        <div class="uk-grid-match" uk-grid>
+            <div class="uk-width-1-2@xl">
+                <div class="uk-flex uk-flex-middle uk-box-shadow">
+                    <img data-src="{% static 'about/happiness.png' %}" uk-img>
+                </div>
+            </div>
+            <div class="uk-width-1-2@xl">
+                <div class="uk-flex uk-flex-middle uk-flex-center">
+                    <div class="uk-width-xlarge uk-text-justify">
+                        <p class="uk-margin-remove-bottom">Головне завдання видавничого дому <span class="uk-text-bold" style="color: var(--primary);"><strong>Callme БухгалтеріяUA</strong></span>, який&nbsp;працює на українському медіаринку з 2005 року – надання клієнтам необхідної спеціалізованої інформації та всебічної фахової підтримки.</p>
+                        <p class="uk-margin-remove-bottom">Наші видання створює професійна команда, забезпечуючи якісний контент та найвищий рівень поліграфічного виконання. В компанії сформовано сильний авторський колектив, до якого увійшли представники міністерств і відомств, провідні аналітики, експерти та досвідчені практики. Ці люди роблять все, щоб охопити гострі на сьогодні теми і передбачити те, що буде актуальним завтра, щоб кожний примірник наших видань був актуальним, вичерпним – і при цьому написаним доступною мовою. Адже надати читачеві чіткий алгоритм дій, зробити складне питання простим і зрозумілим, не втративши його суті – це і є «найвищий пілотаж» !&nbsp;</p>
+                        <p class="uk-margin-remove-bottom">За роки роботи ми значно розширили лінійку видань та послуг, відкрили нові напрями в роботі, завоювали довіру й повагу наших читачів та партнерів. Сьогодні ми активно співпрацюємо з державними органами та професійними об’єднаннями, проводимо профільні семінари, конференції, бізнес-форуми, надаємо консалтингові послуги, відкрили освітні курси підвищення кваліфікації, створили та розвиваємо сучасний кадровий портал.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="uk-section uk-section-default">
+    <div class="uk-container">
+        <h2 class="uk-heading-line uk-h4 uk-text-center uk-margin-bottom"><span>Наші проекти</span></h2>
+        <div class="uk-grid-match uk-text-justify" uk-grid>
+            <div class="uk-width-1-2@m">
+                <div class="uk-card uk-card-default uk-card-body uk-box-shadow-hover-large uk-background-cover uk-background-blend-overlay" uk-scrollspy="cls: uk-animation-fade;" style="background-color: #eaeaea; background-image: url({% static 'blocks/mags.jpg' %});">
+                    <h3 class="uk-card-title"><span style="color:#770000;">Професійна періодика</span></h3>
+                    <ul>
+                        <li>Журнал <a href="/vydannya/kadrovyk" target="_blank"><strong>«Кадровик України»</strong></a></li>
+                        <li>Журнал <a href="/vydannya/kadrovyk-s" target="_blank"><strong>«Кадровик України. Спецвипуск»</strong></a></li>
+                        <li>Журнал<strong> <a href="/vydannya/zarobitna-plata" target="_blank"><strong>«Заробітна плата»</strong></a></strong></li>
+                        <li>Журнал <a href="/vydannya/zarobitna-plata-s" target="_blank"><strong>«Заробітна плата. Спецвипуск»</strong></a></li>
+                        <li>Кадрова газета <a href="/vydannya/consultant-kadrovyka" target="_blank"><strong>«Консультант Кадровика»</strong></a></li>
+                        <li>Електронна газета <strong><a href="http://www.callme.buh-ua.com.ua/novinka-2014"><strong>«</strong>Зарплата&amp;Кадри</a><a href="http://www.callme.buh-ua.com.ua/novinka-2014"><strong>»</strong></a></strong></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uk-width-1-2@m">
+                <div class="uk-card uk-card-default uk-card-body uk-box-shadow-hover-large uk-background-cover uk-background-blend-overlay" uk-scrollspy="cls: uk-animation-fade;" style="background-color: #eaeaeae0; background-image: url({% static 'about/vk24.jpg' %});">
+                    <h3 class="uk-card-title"><a href="https://vk24.ua/"><span style="color:#770000;">Кадровий портал «Відділ Кадрів 24»</span></a></h3>
+                    <p style=" color: #191919; text-shadow: 0 0 1px white, 0 0 2px white, 0 0 3px white; ">Зручний у користуванні ресурс, на якому зібрана вся актуальна, оптимальним чином систематизована і деталізована інформація, необхідна для забезпечення роботи інспектора з кадрів. Утім портал стане у пригоді не лише працівникам відділів кадрів, а й юристам, бухгалтерам, які в силу специфіки своєї діяльності також можуть брати участь у вирішенні проблемних ситуацій, що виникають у кадровому діловодстві.</p>
+                    <a class="uk-button uk-button-default uk-border-rounded" style="border-color: var(--primary); color: var(--primary); background-color: #fff; text-transform: unset; letter-spacing: .5px;font-family: 'Montserrat';font-weight: 600;" href="https://vk24.ua" target="_blank">vk24.ua</a>
+                </div>
+            </div>
+            <div class="uk-width-1-2@m">
+                {% include "block/consulting.html" %}
+            </div>
+            <div class="uk-width-1-2@m">
+                {% include "block/professional.html" %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="uk-section uk-section-default uk-section-small">
+    <div class="uk-container">
+        {% include "block/clients.html" %}
+    </div>
+</section>
+
+<section class="uk-section uk-section-default uk-section-small">
+    <div class="uk-container">
+        {% include "partner_logos.html" %}
+    </div>
+</section>
+
+<section class="uk-section uk-section-default">
+    <div class="uk-container">
+        <h2 class="uk-heading-line uk-h4 uk-text-center uk-margin-bottom"><span>Як нас знайти</span></h2>
+    </div>
+    <div uk-grid>
+        <iframe class="uk-width-1-1" frameborder="0" style="border:0; height: 450px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB96kA18GDjdfcq0sxWmWlQ4sOZ9Fsw1W8&q=Видавництво+«Професійні+видання»" allowfullscreen>
+        </iframe>
+    </div>
+</section>
+{% endblock %}

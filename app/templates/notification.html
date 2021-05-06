@@ -1,0 +1,18 @@
+<script>
+    UIkit.notification({
+        message: '{{ message }}',
+        status: ' {% if message.tags %}{{ message.tags }}{% endif %} uk-border-rounded uk-box-shadow-small uk-margin-medium-bottom uk-margin-medium-right',
+        pos: 'top-right',
+        timeout: 5000
+    });
+    {% if "accountcreation" in message.tags %}
+    window.dataLayer.push({
+        'event': 'accountCreation'
+    });
+    {% endif %}
+    {% if "eventreg" in message.tags %}
+    window.dataLayer.push({
+        'event': 'eventRegistration'
+    });
+    {% endif %}
+</script>

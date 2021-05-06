@@ -1,0 +1,10 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<title>{{ flatpage.title }}</title>
+<div class="uk-section">
+    <div class="uk-container uk-container-expand">
+        {{ flatpage.content|safe }}
+    </div>
+</div>
+{% endblock %}

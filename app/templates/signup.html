@@ -1,0 +1,97 @@
+{% РЕГИСТРАЦИЯ ЧЕРЕЗ ГЛАВНУЮ, ЭТОТ БЛОК ПЕРЕДЕЛАТЬ %}
+
+{% extends "_base.html" %}
+
+{% block page_title %}Реєстрація користувача | Callme БухгалтеріяUA{% endblock %}
+
+{% block meta %}
+<meta property="og:title" content="Реєстрація користувача | Callme БухгалтеріяUA" />
+<meta property="og:site_name" content="Callme БухгалтеріяUA" />
+<link rel="canonical" href="https://{{ current_site.domain }}/accounts/signup/" />
+{% endblock %}
+
+{% block content %}
+
+<h1 class="uk-text-center">Підключити консультаційну лінію за три кроки</h1>
+<section class="uk-section uk-section-xsmall">
+    <div class="uk-container">
+        <div class="uk-child-width-1-3@m uk-grid-divider" uk-grid-match uk-grid>
+            <div>
+                <h2 class="uk-text-center">Зареєструватись</h2>
+                <div class="uk-flex uk-flex-middle uk-flex-column">
+                        {% if form.errors %}
+                        {% for error in form.non_field_errors %}
+                        <div class="uk-text-danger">
+                            <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <form method="post" class="uk-form-stacked">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                <div class="uk-form-controls">
+                                    {{ field }}
+                                </div>
+                                {% for error in field.errors %}
+                                <div class="uk-text-danger">
+                                    <span uk-icon="warning" class="uk-margin-small-right"></span><strong>{{ error|escape }}</strong>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <div>
+                                <p class="uk-text-meta">Зверніть увагу на правильність введених даних, за ними проходить ідентифікація клієнта при замовленні послуги.</p>
+                            </div>
+                            <div class="uk-text-center">
+                                <button id="submitButton" class="uk-button uk-button-default" type="submit">Зареєструватись</button>
+                            </div>
+                            <script type="text/javascript">
+                                document.getElementById('submitButton').addEventListener('click', function() {
+                                    fbq('track', 'CompleteRegistration', {
+                                        value: 0,
+                                        currency: 'UAH',
+                                    });
+                                }, false);
+                            </script>
+                        </form>
+                    </div>
+                    <div class="uk-text-center uk-margin uk-width-large uk-flex uk-flex-around">
+                        <div><a href="{% url 'login' %}" class="uk-button-text">В мене вже є обліковий запис</a></div>
+                    </div>
+            </div>
+            <div>
+                <h2 class="uk-text-center uk-margin-remove-vertical">Замовити</h2>
+                <div class="uk-flex uk-flex-column uk-flex-center uk-height-1-1">
+                    <div class="uk-flex uk-flex-center">
+                        <button class="uk-button uk-button-default" disabled>Завантажити рахунок</button>
+                    </div>
+                    <h3 class="uk-heading-line uk-text-center"><span>або</span></h3>
+                    <div class="uk-flex uk-flex-center">
+                        <button class="uk-button uk-button-default" disabled>Сформувати рахунок для компанії</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2 class="uk-text-center">Користуватись</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% load static %}
+{% block extra_js %}
+<script src="{% static '/js/imask.js' %}"></script>
+{% verbatim %}
+<script>
+    var element = document.getElementById('id_phone');
+    var maskOptions = {
+        mask: '+{38}(000)000-00-00'
+    };
+    var mask = IMask(element, maskOptions);
+</script>
+{% endverbatim %}
+{% endblock %}

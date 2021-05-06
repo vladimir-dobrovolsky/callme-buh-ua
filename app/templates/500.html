@@ -1,0 +1,31 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block meta %}
+<meta name="description" content="Ми нещодавно оновили сайт, тому деякі сторінки можуть знаходитись в інших розділах."/>
+<meta property="og:title" content="Помилка 500" />
+<meta property="og:site_name" content="Callme БухгалтеріяUA" />
+<meta property="og:description" content="Ми нещодавно оновили сайт, тому деякі сторінки можуть знаходитись в інших розділах." />
+{% endblock %}
+
+{% block page_title %} Помилка 500 | Callme БухгалтеріяUA {% endblock %}
+
+{% block content %}
+<section class="uk-section uk-section-xsmall">
+    <div class="uk-container uk-text-justify">
+        <ul class="uk-breadcrumb">
+            <li><a href="/">Головна</a></li>
+        </ul>
+    </div>
+</section>
+<section class="uk-section uk-section-small uk-padding-remove-top">
+    <div class="uk-container uk-container-small">
+        <div class="uk-grid-divider" uk-grid>
+            <div class="uk-width-expand">
+                <h1 class="uk-margin-remove-top">Помилка 500</h1>
+                <p>Адміністратори сайту вже отримали повідомлення про неї. Поверніться назад та спробуйте ще раз через деякий час.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
